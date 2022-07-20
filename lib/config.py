@@ -1,7 +1,7 @@
 # Config file, change values here with caution
 
 # you will need sudo to read the default /var/log/auth.log* files
-LOG_DIR = "/var/log"
+LOG_DIR = "./tests" #"/var/log"
 
 # this string will be globbed to find the matching files
 FILE_GLOB = "auth.log*"
