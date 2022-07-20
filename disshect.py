@@ -9,7 +9,7 @@ def parse_cmd():
     parser.add_argument("--all", action="store_true", help="print all IPs found. Lots of text there.")
     parser.add_argument("-n", "--number", dest="numlines", type=int, default=DEFAULT_PRINT_LINES, help="number of IPs to print, sorted by error total count (descending)")
     parser.add_argument("-l", "--logpath", default=LOG_DIR, help=f"location of the log files. Default : {LOG_DIR}")
-    parser.add_argument("-f", "--files", default=FILE_GLOB, help=f"names of the logfiles. This takes a single string that will be globbed to match the log files. Default : {FILE_GLOB}")
+    parser.add_argument("-f", "--files", default=FILE_GLOB, help=f"names of the logfiles. This takes a single string that will be globbed to match the log files. gzip files will be ignored. Default : {FILE_GLOB}")
     parser.add_argument("-i", "--ip", dest="ip", type=str, default="", help="search for IP in the log files.")
     parser.add_argument("-P", "--all-ports", dest="allports", type=bool, default=False, help="Not implemented")
     parser.add_argument("-p", "--ports-max-print", dest="maxportsprint", type=int, default=DEFAULT_PRINT_PORTS, help=f"Not implemented. Default : {DEFAULT_PRINT_PORTS}")
