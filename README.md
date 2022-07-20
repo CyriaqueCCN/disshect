@@ -55,3 +55,28 @@ Just clone the repo wherever you want and add a link to `disshect.py` to your pa
 
 Only uses Python's standard library
 
+### Example
+
+```
+$ disshect
+
+/var/log/auth.log.1 (4.0 MiB) : 9001 errors
+ * 6147 bad password (68.3%)
+ * 2739 invalid cipherlist (30.4%)
+ * 115 userchange exploit (1.3%)
+34.66.**.** : 1997 errors (1997 invalid cipher list)
+164.132.***.*** : 279 errors (279 invalid cipher list)
+179.60.***.*** : 208 errors (208 bad password)
+92.255.**.** : 175 errors (175 bad password)
+92.255.**.** : 150 errors (150 bad password)
+
+/var/log/auth.log (1.5 MiB) : 2954 errors
+ * 2584 bad password (87.5%)
+ * 346 invalid cipherlist (11.7%)
+ * 24 userchange exploit (0.8%)
+179.60.***.*** : 162 errors (162 bad password)
+101.200.***.** : 79 errors (79 bad password)
+92.255.**.** : 79 errors (79 bad password)
+164.132.***.*** : 72 errors (72 invalid cipher list)
+92.255.**.** : 66 errors (66 bad password)
+```
