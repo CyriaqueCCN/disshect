@@ -1,12 +1,14 @@
 # Disshect
 
-A simple utility to parse SSH error log files.
+A simple utility to parse SSH error logs.
 
 I wrote this script to help me perfect my fail2ban setup (not2gentle, not2harsh) when I found out how much my server was hammered by bots.
 
+It can extract info about repeating offenders and list their nature (IP address, ports of origin, exploit type, number of occurrences...)
+
 ### Usage
 
-```bash
+```
 usage: disshect.py [-h] [--all] [-n NUMLINES] [-l LOGPATH] [-f FILES] [-i IP] [-P ALLPORTS]
                    [-p MAXPORTSPRINT] [-a AFTER] [-b BEFORE] [-q] [-s] [-t ERR_TYPES]
 
@@ -21,7 +23,7 @@ optional arguments:
                         location of the log files. Default : /var/log
   -f FILES, --files FILES
                         names of the logfiles. This takes a single string that will be
-                        globbed to match the log files. Default : auth.log*
+                        globbed to match the log files. gzip files will be ignored. Default : auth.log*
   -i IP, --ip IP        search for IP in the log files.
   -P ALLPORTS, --all-ports ALLPORTS
                         Not implemented
@@ -48,6 +50,7 @@ root. See config.py for customization.
 Just clone the repo wherever you want and add a link to `disshect.py` to your path
 
 `git clone https://github.com/CyriaqueCCN/disshect ~/utils/disshect`
+
 `ln -s ~/utils/disshect/disshect.py ~/.local/bin/disshect`
 
 Only uses Python's standard library
