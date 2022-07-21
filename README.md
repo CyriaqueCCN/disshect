@@ -1,12 +1,14 @@
 # Disshect
 
+
 A simple utility to parse SSH error logs.
 
 I wrote this script to help me perfect my fail2ban setup (not2gentle, not2harsh) when I found out how much my server was hammered by bots.
 
 It can extract info about repeating offenders and list their nature (IP address, ports of origin, exploit type, number of occurrences...)
 
-### Usage
+
+## Usage
 
 ```
 usage: disshect.py [-h] [--all] [-n NUMLINES] [-l LOGPATH] [-f FILES] [-i IP] [-P ALLPORTS]
@@ -42,10 +44,25 @@ optional arguments:
                         'userchange' for preauth userchange attack). Default : all
 
 If you want to parse classic /var/log/auth.log* files, you'll need to run this script as
-root. See config.py for customization.
+root.
 ```
 
-### Install
+Parsing is supported for the following line types :
+
+#### pass
+
+Jul 01 00:00:00 HOSTNAME sshd[PID]: Failed password for root from 12.34.56.78 port 4242 ssh2
+
+#### cipher
+
+Jul 01 00:00:00 HOSTNAME sshd[PID]: Unable to negotiate with 12.34.56.78 port 4242: no matching key exchange method found. Their offer: diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1 [preauth]
+
+#### userchange
+
+Jul 01 00:00:00 HOSTNAME sshd[PID]: Disconnecting authenticating user root 12.34.56.78 port 4242: Change of username or service not allowed: (root,ssh-connection) -> (Mroot,ssh-connection) [preauth]
+
+
+## Install
 
 Just clone the repo wherever you want and add a link to `disshect.py` to your path
 
@@ -55,10 +72,11 @@ Just clone the repo wherever you want and add a link to `disshect.py` to your pa
 
 Only uses Python's standard library
 
-### Example
+
+## Example
 
 ```
-$ disshect
+$ sudo disshect
 
 /var/log/auth.log.1 (4.0 MiB) : 9001 errors
  * 6147 bad password (68.3%)
