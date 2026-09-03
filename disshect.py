@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 
 import argparse
-from lib.config import *
+
+from lib.config import (
+    ATK_ID_CIPHER,
+    ATK_ID_PASS,
+    ATK_ID_USRCHG,
+    DEFAULT_DONT_PRINT_FILEINFO,
+    DEFAULT_PRINT_LINES,
+    DEFAULT_PRINT_PORTS,
+    FILE_GLOB,
+    LOG_DIR,
+)
 from lib.logparser import LogParser
+
 
 def parse_cmd():
     parser = argparse.ArgumentParser(description="Simple utility to parse SSH error log files and extract info about the worst offenders.", epilog="If you want to parse classic /var/log/auth.log* files, you'll need to run this script as root.\nSee config.py for customization.")
@@ -11,6 +22,10 @@ def parse_cmd():
     parser.add_argument("-l", "--logpath", default=LOG_DIR, help=f"location of the log files. Default : {LOG_DIR}")
     parser.add_argument("-f", "--files", default=FILE_GLOB, help=f"names of the logfiles. This takes a single string that will be globbed to match the log files. gzip files will be ignored. Default : {FILE_GLOB}")
     parser.add_argument("-i", "--ip", dest="ip", type=str, default="", help="search for IP in the log files.")
+    # `type=bool` is a trap kept as-is only because the flag does
+    # nothing yet: argparse applies `bool()` to the STRING, so
+    # `--all-ports False` yields True, and every non-empty value does.
+    # Whoever implements this must turn it into `action="store_true"`.
     parser.add_argument("-P", "--all-ports", dest="allports", type=bool, default=False, help="Not implemented")
     parser.add_argument("-p", "--ports-max-print", dest="maxportsprint", type=int, default=DEFAULT_PRINT_PORTS, help=f"Not implemented. Default : {DEFAULT_PRINT_PORTS}")
     parser.add_argument("-a", "--after", dest="after", type=str, default="", help="Not implemented")

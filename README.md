@@ -47,6 +47,28 @@ If you want to parse classic /var/log/auth.log* files, you'll need to run this s
 root.
 ```
 
+## Log formats
+
+Both syslog timestamp shapes are read, and the address is located by
+ANCHOR WORDS in the line rather than by a fixed column:
+
+- traditional syslog, three tokens : `Jul 01 00:00:00 host sshd[pid]: ...`
+- ISO 8601 / RFC5424 / journald, one token :
+  `2026-09-03T00:00:00.123456+02:00 host sshd[pid]: ...`
+
+Both IPv4 and IPv6 clients are counted, and `-i` accepts either.
+
+Every extracted address is checked with `ipaddress` before being counted.
+A line that matches an attack string but whose address cannot be read is
+not silently dropped: it is counted and reported as
+
+```
+ ! 3 matching lines could not be read (unexpected format)
+```
+
+Non-UTF-8 bytes (usernames come straight from the client) are replaced
+rather than fatal, so a single crafted byte cannot stop the scan.
+
 Parsing is supported for the following line types :
 
 #### pass
@@ -71,6 +93,19 @@ Just clone the repo wherever you want and add a link to `disshect.py` to your pa
 `ln -s ~/utils/disshect/disshect.py ~/.local/bin/disshect`
 
 Only uses Python's standard library
+
+
+## Checks
+
+```
+python3 checks/verifie.py
+```
+
+25 checks over generated samples: both timestamp formats, IPv6, a
+truncated line, a non-UTF-8 byte, blank lines, a glob matching only
+gzipped files, and `-t` with an unknown name. The last section is an
+active control - it fails on purpose if the harness stops seeing
+anything, so an empty run cannot read as a pass.
 
 
 ## Example
